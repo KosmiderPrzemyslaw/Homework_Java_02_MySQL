@@ -3,25 +3,25 @@ package DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class DBConnection {
+public class DBConnection implements AutoCloseable {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/MySQL_JAVA_02?useSSL=false&characterEncoding=utf8";
-    private static final String USER = "root";
-    private static final String PASSWORD = "coderslab";
+    private Connection connection;
 
+    public DBConnection() throws SQLException {
+        String URL = "jdbc:mysql://localhost:3306/products_ex?useSSL=false&characterEncoding=utf8";
+        String USER = "root";
+        String PASSWORD = "coderslab";
 
-    public static Connection connectToDb() {
-
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)){
-            return connection;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        this.connection = DriverManager.getConnection(URL,USER,PASSWORD);
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
 
+    @Override
+    public void close() throws Exception {
 
+    }
 }
