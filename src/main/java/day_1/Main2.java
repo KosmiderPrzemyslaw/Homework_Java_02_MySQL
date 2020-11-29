@@ -30,6 +30,18 @@ public class Main2 {
             "(movie_id INT AUTO_INCREMENT," +
             "title VARCHAR(255)," +
             "description VARCHAR(255)," +
-            "rating DECIMAL(2,1)," +
+            "rating DECIMAL(3,2)," +
             "PRIMARY KEY(movie_id))";
+
+    static String createTableTickets = "CREATE TABLE IF NOT EXISTS tickets " +
+            "(ticket_id INT AUTO_INCREMENT," +
+            "quantity INT," +
+            "price DECIMAL(3,2)," +
+            "PRIMARY KEY(ticket_id))";
+
+    static String createTablePayments = "CREATE TABLE IF NOT EXISTS payments " +
+            "(payment_id INT AUTO_INCREMENT," +
+            "type VARCHAR(255)," +
+            "payment_date DATE," +
+            "PRIMARY KEY(payment_id))";
 }
