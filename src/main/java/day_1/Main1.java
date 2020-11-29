@@ -19,6 +19,7 @@ public class Main1 {
             statement.executeUpdate(Main2.createTableOrders);
             statement.executeUpdate(Main2.createTableClients);
             statement.executeUpdate(Main2.createTableCinemas);
+            statement.executeUpdate(Main2.createTableMovies);
         } catch (SQLException e) {
             e.printStackTrace();
         }

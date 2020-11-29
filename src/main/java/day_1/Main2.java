@@ -25,4 +25,11 @@ public class Main2 {
             "name VARCHAR(255)," +
             "address VARCHAR(255)," +
             "PRIMARY KEY(cinema_id))";
+
+    static String createTableMovies = "CREATE TABLE IF NOT EXISTS movies " +
+            "(movie_id INT AUTO_INCREMENT," +
+            "title VARCHAR(255)," +
+            "description VARCHAR(255)," +
+            "rating DECIMAL(2,1)," +
+            "PRIMARY KEY(movie_id))";
 }
