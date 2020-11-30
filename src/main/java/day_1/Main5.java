@@ -17,9 +17,14 @@ public class Main5 {
                 String cinemaName = resultSet.getString("name");
                 checkLength(cinemaName);
                 System.out.println("cinema: " + checkLength(cinemaName) + " length: " + cinemaName.length());
-
-
             }
+
+
+            PreparedStatement preparedStatement1 =
+                    connection.prepareStatement("SELECT movie_id, title, rating FROM products_ex.movies WHERE rating > (SELECT AVG(rating) FROM movies)");
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            PrintUtil.print(resultSet1, "movie_id", "title", "rating");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
