@@ -19,6 +19,9 @@ public class Main5 {
                 System.out.println("cinema: " + checkLength(cinemaName) + " length: " + cinemaName.length());
             }
 
+            PreparedStatement preparedStatement2 = connectToDb().prepareStatement("SELECT * FROM products_ex.movies");
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
+            PrintUtil.print(resultSet2, "movie_id", "title");
 
             PreparedStatement preparedStatement1 =
                     connection.prepareStatement("SELECT movie_id, title, rating FROM products_ex.movies WHERE rating > (SELECT AVG(rating) FROM movies)");
