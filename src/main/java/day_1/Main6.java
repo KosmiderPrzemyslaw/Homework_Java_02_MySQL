@@ -26,6 +26,11 @@ public class Main6 {
                     connectionConnection.prepareStatement("SELECT  * FROM products_ex.tickets WHERE products_ex.tickets.price > 5.30");
             ResultSet resultSet1 = preparedStatement1.executeQuery();
             PrintUtil.print(resultSet1, "ticket_id");
+
+            PreparedStatement preparedStatement2 =
+                    connectionConnection.prepareStatement("SELECT title, description FROM products_ex.movies ORDER BY rating DESC LIMIT 1");
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
+            PrintUtil.print(resultSet2, "title");
         } catch (SQLException e) {
             e.printStackTrace();
         }
