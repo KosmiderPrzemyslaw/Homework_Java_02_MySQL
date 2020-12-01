@@ -10,6 +10,8 @@ public class Main7 {
     public static String selectAllPayments = "SELECT products_ex.payments.type, COUNT(*) AS paymentsByType FROM products_ex.payments GROUP BY type";
     public static String selectAvgOneTicketPriceFromTickets = "SELECT AVG(products_ex.tickets.price) as avgPrice FROM products_ex.tickets";
     public static String selectLastFivePaymentsStartingFromSecond = "SELECT products_ex.payments.payment_date FROM products_ex.payments ORDER BY payment_date DESC, payment_id DESC LIMIT 1,5";
+    public static String query = "SELECT products_ex.payments.type, COUNT(*) as countByType FROM products_ex.payments group by type having countByType > 2";
+    public static String query1 = "SELECT sum(products_ex.tickets.quantity) as sumOfTickets FROM products_ex.tickets where price > 4";
 
     public static void main(String[] args) {
         getDataFromDatabase();
@@ -28,6 +30,12 @@ public class Main7 {
 
             ResultSet resultSet3 = getConnection().createStatement().executeQuery(selectLastFivePaymentsStartingFromSecond);
             PrintUtil.print(resultSet3, "payment_date");
+
+            ResultSet resultSet4 = getConnection().createStatement().executeQuery(query);
+            PrintUtil.print(resultSet4, "countByType");
+
+            ResultSet resultSet5 = getConnection().createStatement().executeQuery(query1);
+            PrintUtil.print(resultSet5, "sumOfTickets");
 
         } catch (SQLException e) {
             e.printStackTrace();
