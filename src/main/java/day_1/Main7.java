@@ -7,7 +7,8 @@ import java.sql.*;
 public class Main7 {
 
     public static String selectAllTickets = "SELECT SUM(products_ex.tickets.quantity) as sumOfTickets FROM products_ex.tickets";
-    public static String selectAllPayments = "SELECT products_ex.payments.type AS paymentsByType FROM products_ex.payments GROUP BY type";
+    public static String selectAllPayments = "SELECT products_ex.payments.type, COUNT(*) AS paymentsByType FROM products_ex.payments GROUP BY type";
+    public static String selectAvgOneTicketPriceFromTickets = "SELECT AVG(products_ex.tickets.price) as avgPrice FROM products_ex.tickets";
 
     public static void main(String[] args) {
         getDataFromDatabase();
@@ -20,6 +21,9 @@ public class Main7 {
 
             ResultSet resultSet = getConnection().createStatement().executeQuery(selectAllPayments);
             PrintUtil.print(resultSet, "paymentsByType");
+
+            ResultSet resultSet2 = getConnection().createStatement().executeQuery(selectAvgOneTicketPriceFromTickets);
+            PrintUtil.print(resultSet2, "avgPrice");
 
         } catch (SQLException e) {
             e.printStackTrace();
