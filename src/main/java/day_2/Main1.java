@@ -44,6 +44,6 @@ public class Main1 {
 
     private static void removeMovieById(int id, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM products_ex.movies WHERE movie_id=?");
-        preparedStatement.setInt(1, );
+        preparedStatement.setInt(1, id);
     }
 }
