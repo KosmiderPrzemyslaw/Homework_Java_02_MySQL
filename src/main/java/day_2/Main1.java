@@ -17,6 +17,12 @@ public class Main1 {
             Connection connection = new DBConnection().getConnection();
             printAllMovies(connection);
             int movieIdToRemove = getMovieIdToRemove();
+            removeMovieById(movieIdToRemove, connection);
+            printAllMovies(connection);
+            ResultSet resultSet = findMovieById(7, connection);
+
+         //  PrintUtil.print(resultSet, "title", "description");
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,5 +51,13 @@ public class Main1 {
     private static void removeMovieById(int id, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM products_ex.movies WHERE movie_id=?");
         preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+        System.out.println("Usunięto film  o id " + id);
+    }
+
+    private static ResultSet findMovieById(int id, Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT products_ex.movies.title FROM products_ex.movies where products_ex.movies.movie_id = ?");
+        preparedStatement.setInt(1, id);
+        return preparedStatement.executeQuery();
     }
 }
