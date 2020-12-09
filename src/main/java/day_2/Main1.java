@@ -16,10 +16,10 @@ public class Main1 {
         try {
             Connection connection = new DBConnection().getConnection();
             printAllMovies(connection);
-            int movieIdToRemove = getMovieIdToRemove();
+            int movieIdToRemove = getMovieId();
             removeMovieById(movieIdToRemove, connection);
             printAllMovies(connection);
-            ResultSet resultSet = findMovieById(7, connection);
+            findMovieById(7, connection);
 
          //  PrintUtil.print(resultSet, "title", "description");
 
@@ -34,16 +34,17 @@ public class Main1 {
     private static void printAllMovies(Connection connection) throws SQLException {
         ResultSet resultSet = connection.createStatement().executeQuery(
                 "SELECT products_ex.movies.movie_id, products_ex.movies.title FROM products_ex.movies");
+        System.out.println("-------Lista wszystkich filmów-------");
         PrintUtil.print(resultSet, "movie_id", "title");
 
     }
 
-    private static int getMovieIdToRemove() {
+    private static int getMovieId() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj id filmu do usunięcia: ");
+        System.out.println("Podaj id filmu");
         while (!scanner.hasNextInt()) {
             scanner.next();
-            System.out.println("Podaj Id filmu do usunięcia! Wprowadź liczbę całkowitą!");
+            System.out.println("Podaj Id filmu! Wprowadź liczbę całkowitą!");
         }
         return scanner.nextInt();
     }
@@ -55,9 +56,11 @@ public class Main1 {
         System.out.println("Usunięto film  o id " + id);
     }
 
-    private static ResultSet findMovieById(int id, Connection connection) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT products_ex.movies.title FROM products_ex.movies where products_ex.movies.movie_id = ?");
+    private static void findMovieById(int id, Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection
+                .prepareStatement("SELECT products_ex.movies.movie_id, products_ex.movies.title FROM products_ex.movies where products_ex.movies.movie_id = ?");
         preparedStatement.setInt(1, id);
-        return preparedStatement.executeQuery();
+        ResultSet resultSet = preparedStatement.executeQuery();
+        PrintUtil.print(resultSet, "movie_id", "title");
     }
 }
