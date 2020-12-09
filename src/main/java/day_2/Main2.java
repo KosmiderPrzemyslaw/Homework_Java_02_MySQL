@@ -10,13 +10,23 @@ import java.util.List;
 public class Main2 {
     public static void main(String[] args) {
         Connection connection = connectToDb();
+        String query = "SELECT * FROM products_ex.tickets";
 
+        try {
+            List<String> allTickets = getDataFromDbToArrayList(connection, query);
+            for (String ticket : allTickets
+            ) {
+                System.out.print(ticket);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         ResultSet allMoviesFromDb = getAllMoviesFromDb(connection);
         try {
             List<String> movieListFormDb = getAllMoviesFromDbPutToArrayList(connection);
-            for (String movie: movieListFormDb
-                 ) {
+            for (String movie : movieListFormDb
+            ) {
                 System.out.print(movie);
             }
         } catch (SQLException e) {
@@ -68,9 +78,29 @@ public class Main2 {
             while (i <= columnCount) {
                 movieList.add(resultSet.getString(i++) + ", ");
             }
+            movieList.add("\n");
         }
         return movieList;
     }
+
+    private static List<String> getDataFromDbToArrayList(Connection connection, String query) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        int countColumn = resultSetMetaData.getColumnCount();
+        List<String> stringList = new ArrayList<>(countColumn);
+
+        while (resultSet.next()) {
+            int i = 1;
+            while (i <= countColumn) {
+                stringList.add(resultSet.getMetaData().getColumnName(i) + ": " + resultSet.getString(i++) + " ");
+            }
+
+            stringList.add("\n");
+        }
+        return stringList;
+    }
+
 }
 
 
