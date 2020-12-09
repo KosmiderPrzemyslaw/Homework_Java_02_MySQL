@@ -11,6 +11,17 @@ public class Main2 {
     public static void main(String[] args) {
         Connection connection = connectToDb();
         String query = "SELECT * FROM products_ex.tickets";
+        String query1 = "SELECT products_ex.payments.payment_date FROM products_ex.payments ORDER BY payment_date";
+
+        try {
+            List<String> paymentsOrderByDate = getDataFromDbToArrayList(connection, query1);
+            for (String payment : paymentsOrderByDate
+                 ) {
+                System.out.print(payment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try {
             List<String> allTickets = getDataFromDbToArrayList(connection, query);
@@ -34,7 +45,9 @@ public class Main2 {
         }
 
         try {
-            PrintUtil.print(allMoviesFromDb, "movie_id", "title", "rating");
+            if (allMoviesFromDb != null) {
+                PrintUtil.print(allMoviesFromDb, "movie_id", "title", "rating");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
