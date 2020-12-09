@@ -3,10 +3,9 @@ package day_2;
 import DBConnection.DBConnection;
 import day_1.PrintUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main2 {
     public static void main(String[] args) {
@@ -14,6 +13,15 @@ public class Main2 {
 
 
         ResultSet allMoviesFromDb = getAllMoviesFromDb(connection);
+        try {
+            List<String> movieListFormDb = getAllMoviesFromDbPutToArrayList(connection);
+            for (String movie: movieListFormDb
+                 ) {
+                System.out.print(movie);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try {
             PrintUtil.print(allMoviesFromDb, "movie_id", "title", "rating");
@@ -48,4 +56,21 @@ public class Main2 {
         return connection;
     }
 
+    private static List<String> getAllMoviesFromDbPutToArrayList(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM products_ex.movies");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        int columnCount = resultSetMetaData.getColumnCount();
+        List<String> movieList = new ArrayList<>(columnCount);
+
+        while (resultSet.next()) {
+            int i = 1;
+            while (i <= columnCount) {
+                movieList.add(resultSet.getString(i++) + ", ");
+            }
+        }
+        return movieList;
+    }
 }
+
+
