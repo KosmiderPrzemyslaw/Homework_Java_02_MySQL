@@ -14,7 +14,7 @@ public class Main6 {
             Connection connection = new DBConnection().getConnection();
             while (true) {
                 getAllCinemasFromDb();
-                String choice = InputUtil.askUser("Your choice");
+                String choice = InputUtil.askUser("Entry 'e' to edit, 'u' to remove cinema or 'x' to escape");
 
                 switch (choice.toLowerCase()) {
                     case "x": {
@@ -95,6 +95,5 @@ public class Main6 {
         } else {
             System.out.println("Something went wrong - the cinema ID: " + id + "was not edited");
         }
-
     }
 }
