@@ -10,23 +10,55 @@ import java.sql.SQLException;
 
 public class Main6 {
     public static void main(String[] args) {
-        while (true) {
-            getAllCinemasFromDb();
-            String choice = InputUtil.askUser("Your choice");
+        try {
+            Connection connection = new DBConnection().getConnection();
+            while (true) {
+                getAllCinemasFromDb();
+                String choice = InputUtil.askUser("Your choice");
 
-            switch (choice.toLowerCase()) {
-                case "x": {
-                    System.out.println("bye!");
+                switch (choice.toLowerCase()) {
+                    case "x": {
+                        System.out.println("bye!");
+                    }
+                    return;
+
+                    case "e": {
+                        askAndModifyRecord(connection);
+                    }
+
+                    case "u":{
+                        askAndRemoveRecord(connection);
+                    }
                 }
-                return;
 
-                case "e": {
-
-                }
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
+    }
+
+    private static void askAndRemoveRecord(Connection connection) throws SQLException {
+        int id = InputUtil.askForValidNumber("Type Id of the cinema to be removed: ");
+
+        String answer = InputUtil.askUser("Are you sure to remove the cinema with ID: " + id + "? Type 'T' to confirm");
+
+        if("T".equalsIgnoreCase(answer)){
+            removeCinema(connection, id);
+        }
+    }
+
+    private static void removeCinema(Connection connection, int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM products_ex.cinemas where cinema_id = ?");
+        preparedStatement.setInt(1, id);
+        int affectedRows = preparedStatement.executeUpdate();
+
+        if (affectedRows == 1) {
+            System.out.println("Successfully removed cinema with Id: " + id);
+        } else {
+            System.out.println("Something went wrong - the cinema Id: " + id + " was not removed");
+        }
     }
 
     private static void getAllCinemasFromDb() {
