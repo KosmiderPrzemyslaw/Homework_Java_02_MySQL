@@ -15,13 +15,18 @@ public class FirstClass {
             ResultSet resultSet = preparedStatement.executeQuery();
             PrintUtil.print(resultSet, "title", "expire");
 
-            connection.prepareStatement("SELECT * FROM homework_day1_mysql.offers where price < price*2 and promoted = 1 and promoted_to > CURRENT_DATE");
-            ResultSet resultSet2 = preparedStatement.executeQuery();
+            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * FROM homework_day1_mysql.offers where price < price*2 and promoted = 1 and promoted_to > CURRENT_DATE");
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
             PrintUtil.print(resultSet2, "title", "price", "expire");
 
-            connection.prepareStatement("SELECT COUNT(*) AS sum_active FROM homework_day1_mysql.offers WHERE status = 1 and expire > NOW()");
-            ResultSet resultSet3 = preparedStatement.executeQuery();
-            PrintUtil.print(resultSet3, "status", "title");
+            PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT COUNT(*) AS sum_active FROM homework_day1_mysql.offers WHERE status = 1 and expire > NOW()");
+            ResultSet resultSet3 = preparedStatement3.executeQuery();
+            PrintUtil.print(resultSet3,"sum_active");
+
+            PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT COUNT(homework_day1_mysql.offers.id) AS sum_offers from homework_day1_mysql.offers where status = 1 and promoted_to > CURRENT_DATE and expire < NOW() and price > 300000");
+            ResultSet resultSet4 = preparedStatement1.executeQuery();
+            PrintUtil.print(resultSet4,"sum_offers");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
