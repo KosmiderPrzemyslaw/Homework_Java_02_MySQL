@@ -1,10 +1,7 @@
 import DBConnection.DBConnection;
 import day_1.PrintUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class FirstClass {
     public static void main(String[] args) {
@@ -21,14 +18,26 @@ public class FirstClass {
 
             PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT COUNT(*) AS sum_active FROM homework_day1_mysql.offers WHERE status = 1 and expire > NOW()");
             ResultSet resultSet3 = preparedStatement3.executeQuery();
-            PrintUtil.print(resultSet3,"sum_active");
+            PrintUtil.print(resultSet3, "sum_active");
 
             PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT COUNT(homework_day1_mysql.offers.id) AS sum_offers from homework_day1_mysql.offers where status = 1 and promoted_to > CURRENT_DATE and expire < NOW() and price > 300000");
             ResultSet resultSet4 = preparedStatement1.executeQuery();
-            PrintUtil.print(resultSet4,"sum_offers");
+            PrintUtil.print(resultSet4, "sum_offers");
+
+
+            PreparedStatement preparedStatement4 = connection.prepareStatement("SELECT homework_day1_mysql.offers.title AS offersTitle FROM homework_day1_mysql.offers ORDER BY id DESC");
+            printResults(preparedStatement4, "offersTitle");
+
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static void printResults(PreparedStatement preparedStatement , String... columnNames) throws SQLException {
+        ResultSet resultSet = preparedStatement.executeQuery();
+        PrintUtil.print(resultSet, columnNames);
+
     }
 }
