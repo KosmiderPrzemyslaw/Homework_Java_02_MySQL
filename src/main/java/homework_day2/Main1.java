@@ -43,6 +43,14 @@ public class Main1 {
 
                 preparedStatement3.executeUpdate();
 
+                PreparedStatement preparedStatement4 = connection.prepareStatement
+                        ("UPDATE homework_day1_mysql.offers " +
+                                "SET description = REPLACE(description, 'executed', 'found') " +
+                                "WHERE description LIKE '%executed%'" +
+                                "AND phone LIKE '(%)%'" +
+                                "AND price > 3000");
+                preparedStatement4.executeUpdate();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
