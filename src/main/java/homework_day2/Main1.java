@@ -34,6 +34,15 @@ public class Main1 {
                                 "AND promoted = 0");
 
                 preparedStatement2.executeUpdate();
+
+                PreparedStatement preparedStatement3 = connection.prepareStatement
+                        ("UPDATE homework_day1_mysql.offers " +
+                                "SET promoted = 1 " +
+                                "WHERE promoted = 0 " +
+                                "AND SUBSTRING(phone, 3,2) = 48");
+
+                preparedStatement3.executeUpdate();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
