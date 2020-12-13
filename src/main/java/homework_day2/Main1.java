@@ -18,10 +18,11 @@ public class Main1 {
                         ("UPDATE homework_day1_mysql.offers " +
                                 "SET price = price + 1000 " +
                                 "WHERE id between 10 and 20");
+                preparedStatement.executeUpdate();
 
                 PreparedStatement preparedStatement1 = connection.prepareStatement
-                        ("");
-                preparedStatement.executeUpdate();
+                        ("DELETE homework_day1_mysql.offers from homework_day1_mysql.offers where expire < now() and expire > date_sub(CURRENT_DATE, INTERVAL 4 DAY )");
+                preparedStatement1.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
