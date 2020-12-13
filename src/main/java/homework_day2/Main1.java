@@ -21,8 +21,19 @@ public class Main1 {
                 preparedStatement.executeUpdate();
 
                 PreparedStatement preparedStatement1 = connection.prepareStatement
-                        ("DELETE homework_day1_mysql.offers from homework_day1_mysql.offers where expire < now() and expire > date_sub(CURRENT_DATE, INTERVAL 4 DAY )");
+                        ("DELETE homework_day1_mysql.offers " +
+                                "FROM homework_day1_mysql.offers " +
+                                "WHERE expire < now() " +
+                                "AND expire > date_sub(CURRENT_DATE, INTERVAL 4 DAY )");
                 preparedStatement1.executeUpdate();
+
+                PreparedStatement preparedStatement2 = connection.prepareStatement
+                        ("DELETE homework_day1_mysql.offers " +
+                                "FROM homework_day1_mysql.offers " +
+                                "WHERE phone LIKE '+48%' " +
+                                "AND promoted = 0");
+
+                preparedStatement2.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
