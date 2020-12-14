@@ -9,7 +9,7 @@ public class DBConnection implements AutoCloseable {
     private Connection connection;
 
     public DBConnection() throws SQLException {
-        String URL = "jdbc:mysql://localhost:3306/homework_day1_mysql?useSSL=false&characterEncoding=utf8";
+        String URL = "jdbc:mysql://localhost:3306/cinema?useSSL=false&characterEncoding=utf8";
         String USER = "root";
         String PASSWORD = "coderslab";
 
