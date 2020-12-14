@@ -15,7 +15,8 @@ public class Main2 {
                             "(id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY," +
                             "offer_id INT UNSIGNED," +
                             "src VARCHAR(100)," +
-                            "dimension VARCHAR(10))");
+                            "dimension VARCHAR(10)," +
+                            "FOREIGN KEY (offer_id) REFERENCES homework_day1_mysql.offers(id))");
             preparedStatement.executeUpdate();
 
 
